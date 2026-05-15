@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Add Subject</title>
+
+    <style>
+
+        body{
+            font-family:Arial;
+            background:#f2f6ff;
+            margin:0;
+        }
+
+        .container{
+            width:80%;
+            margin:auto;
+            padding:20px;
+        }
+
+        .box{
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0px 0px 10px #ccc;
+            margin-bottom:20px;
+        }
+
+        input{
+            width:45%;
+            padding:10px;
+            margin:10px;
+            border:1px solid #ccc;
+            border-radius:5px;
+        }
+
+        button{
+            padding:10px 20px;
+            background:green;
+            color:white;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            background:white;
+        }
+
+        th,td{
+            border:1px solid #ddd;
+            padding:10px;
+            text-align:center;
+        }
+
+        th{
+            background:#1976d2;
+            color:white;
+        }
+
+        .msg{
+            color:green;
+            font-weight:bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Add Subject 📚</h2>
+
+    <!-- ⭐ BACK BUTTON ADDED HERE -->
+    <a href="/admin_dashboard">
+        <button type="button" style="background:#333; margin-bottom:10px;">
+            ⬅ Back to Dashboard
+        </button>
+    </a>
+
+    {% if message %}
+        <p class="msg">{{ message }}</p>
+    {% endif %}
+
+    <!-- ADD FORM -->
+    <div class="box">
+
+        <form method="POST">
+
+            <input type="text" name="subject_name" placeholder="Subject Name" required>
+
+            <input type="text" name="chapter_name" placeholder="Chapter Name" required>
+
+            <button type="submit">Add Subject</button>
+
+        </form>
+
+    </div>
+
+    <!-- TABLE -->
+    <div class="box">
+
+        <h3>All Subjects</h3>
+
+        <table>
+
+            <tr>
+                <th>ID</th>
+                <th>Subject</th>
+                <th>Chapter</th>
+                <th>Action</th>
+            </tr>
+
+            {% for subject in subjects %}
+
+            <tr>
+                <td>{{ subject.id }}</td>
+                <td>{{ subject.subject_name }}</td>
+                <td>{{ subject.chapter_name }}</td>
+
+                <td>
+
+                    <a href="/edit_subject/{{ subject.id }}">
+                        <button style="background:orange;">Edit</button>
+                    </a>
+
+                    <a href="/delete_subject/{{ subject.id }}"
+                       onclick="return confirm('Delete?')">
+
+                        <button style="background:red;">Delete</button>
+
+                    </a>
+
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

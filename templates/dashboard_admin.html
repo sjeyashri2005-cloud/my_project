@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Admin Dashboard - Quiz Master</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <!-- LOGO -->
+
+        <img src="https://cdn-icons-png.flaticon.com/512/2620/2620277.png"
+             class="sidebar-logo">
+
+        <h2>Quiz Master</h2>
+
+        <!-- MENUS -->
+
+        <a href="/admin_dashboard">
+
+            Dashboard
+
+        </a>
+
+        <a href="/admin_students">
+
+            Students
+
+        </a>
+
+        <a href="/admin_teachers">
+
+            Teachers
+
+        </a>
+
+        <!-- SUBJECT DROPDOWN -->
+
+        <div class="subject-menu">
+
+            <button class="subject-btn"
+                    onclick="toggleSubjectMenu()">
+
+                Subjects ▼
+
+            </button>
+
+            <div class="subject-dropdown"
+                 id="subjectDropdown">
+
+                <a href="/add_subject">
+
+                    Add Subject
+
+                </a>
+
+                <a href="/assign_subject">
+
+                    Assign Subject
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- REPORTS -->
+
+        <a href="/reports">
+
+            Scores
+
+        </a>
+
+        <!-- LOGOUT -->
+
+        <a href="/logout">
+
+            Logout
+
+        </a>
+
+    </div>
+
+    <!-- MAIN CONTENT -->
+
+    <div class="main-content">
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <div>
+
+                <h1>
+
+                    Welcome Admin Dashboard 👑
+
+                </h1>
+
+                <h3>
+
+                    Hello {{ admin.fullname }}
+
+                </h3>
+
+                <p>
+
+                    Control and manage system data
+
+                </p>
+
+            </div>
+
+            <input type="text"
+                   placeholder="Search..."
+                   class="search-box">
+
+        </div>
+
+        <!-- ADMIN DETAILS -->
+
+        <div class="table-box">
+
+            <h2>
+
+                Admin Details
+
+            </h2>
+
+            <table>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Name</th>
+
+                    <th>Email</th>
+
+                    <th>Role</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+
+                        {{ admin.id }}
+
+                    </td>
+
+                    <td>
+
+                        {{ admin.fullname }}
+
+                    </td>
+
+                    <td>
+
+                        {{ admin.email }}
+
+                    </td>
+
+                    <td>
+
+                        {{ admin.role }}
+
+                    </td>
+
+                    <td>
+
+                        <!-- EDIT -->
+
+                        <a href="/edit_user/{{ admin.id }}">
+
+                            <button class="edit-btn">
+
+                                Edit
+
+                            </button>
+
+                        </a>
+
+                        <!-- DELETE -->
+
+                        <a href="/delete_user/{{ admin.id }}"
+                           onclick="return confirm('Delete Admin?')">
+
+                            <button class="delete-btn">
+
+                                Delete
+
+                            </button>
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+        <br>
+
+        <!-- CARDS -->
+
+        <div class="cards">
+
+            <div class="card">
+
+                <h2>
+
+                    {{ total_students }}
+
+                </h2>
+
+                <p>
+
+                    Total Students
+
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h2>
+
+                    {{ total_teachers }}
+
+                </h2>
+
+                <p>
+
+                    Total Teachers
+
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h2>
+
+                    {{ total_subjects or 0 }}
+
+                </h2>
+
+                <p>
+
+                    Total Subjects
+
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h2>
+
+                    {{ total_quizzes or 0 }}
+
+                </h2>
+
+                <p>
+
+                    Total Quizzes
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- SYSTEM OVERVIEW -->
+
+        <div class="table-box">
+
+            <h2>
+
+                System Overview
+
+            </h2>
+
+            <p>
+
+                Welcome Admin 👑
+                You can manage students,
+                teachers, subjects, quizzes
+                and reports from this dashboard.
+
+            </p>
+
+        </div>
+
+        <!-- RECENT STUDENTS -->
+
+        <div class="table-box">
+
+            <h2>
+
+                Recent Students
+
+            </h2>
+
+            <table>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Name</th>
+
+                    <th>Email</th>
+
+                </tr>
+
+                {% for student in recent_students %}
+
+                <tr>
+
+                    <td>{{ student.id }}</td>
+
+                    <td>{{ student.fullname }}</td>
+
+                    <td>{{ student.email }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+        <!-- RECENT TEACHERS -->
+
+        <div class="table-box">
+
+            <h2>
+
+                Recent Teachers
+
+            </h2>
+
+            <table>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Name</th>
+
+                    <th>Email</th>
+
+                </tr>
+
+                {% for teacher in recent_teachers %}
+
+                <tr>
+
+                    <td>{{ teacher.id }}</td>
+
+                    <td>{{ teacher.fullname }}</td>
+
+                    <td>{{ teacher.email }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- JAVASCRIPT -->
+
+<script>
+
+function toggleSubjectMenu(){
+
+    var menu =
+        document.getElementById("subjectDropdown");
+
+    var button =
+        document.querySelector(".subject-btn");
+
+    menu.classList.toggle("show");
+
+    if(menu.classList.contains("show")){
+
+        button.innerHTML = "Subjects ▲";
+    }
+
+    else{
+
+        button.innerHTML = "Subjects ▼";
+    }
+}
+
+window.onclick = function(event){
+
+    if(!event.target.matches('.subject-btn')){
+
+        var dropdown =
+            document.getElementById("subjectDropdown");
+
+        var button =
+            document.querySelector(".subject-btn");
+
+        if(dropdown.classList.contains('show')){
+
+            dropdown.classList.remove('show');
+
+            button.innerHTML = "Subjects ▼";
+        }
+    }
+}
+
+</script>
+
+</body>
+
+</html>

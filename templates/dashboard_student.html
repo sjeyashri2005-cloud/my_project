@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Student Dashboard</title>
+
+    <style>
+
+        /* =========================
+           STUDENT DASHBOARD CSS
+        ========================= */
+
+        body{
+            margin:0;
+            padding:0;
+            font-family: Arial, Helvetica, sans-serif;
+            background:#f4f7fc;
+        }
+
+        /* MAIN CONTAINER */
+        .dashboard-container{
+            width:90%;
+            margin:30px auto;
+            background:white;
+            padding:25px;
+            border-radius:12px;
+            box-shadow:0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        /* HEADING */
+        h1{
+            text-align:center;
+            color:#2c3e50;
+            margin-bottom:10px;
+        }
+
+        h2{
+            color:#34495e;
+            margin-top:30px;
+        }
+
+        /* WELCOME TEXT */
+        p{
+            font-size:18px;
+            color:#555;
+        }
+
+        /* HR LINE */
+        hr{
+            border:none;
+            height:1px;
+            background:#ddd;
+            margin:20px 0;
+        }
+
+        /* BUTTONS */
+        button{
+            border:none;
+            padding:10px 16px;
+            border-radius:6px;
+            cursor:pointer;
+            font-size:14px;
+            transition:0.3s;
+        }
+
+        /* LOGOUT BUTTON */
+        .logout-btn{
+            background:red;
+            color:white;
+        }
+
+        .logout-btn:hover{
+            background:darkred;
+        }
+
+        /* SCORE BUTTON */
+        .score-btn{
+            background:green;
+            color:white;
+        }
+
+        .score-btn:hover{
+            background:darkgreen;
+        }
+
+        /* START EXAM BUTTON */
+        .start-btn{
+            background:#3498db;
+            color:white;
+        }
+
+        .start-btn:hover{
+            background:#2980b9;
+        }
+
+        /* TABLE DESIGN */
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:15px;
+            background:white;
+        }
+
+        /* TABLE HEAD */
+        table th{
+            background:#2c3e50;
+            color:white;
+            padding:12px;
+            text-align:center;
+        }
+
+        /* TABLE DATA */
+        table td{
+            padding:12px;
+            text-align:center;
+            border:1px solid #ddd;
+        }
+
+        /* ROW HOVER */
+        table tr:hover{
+            background:#f1f1f1;
+        }
+
+        /* LINKS */
+        a{
+            text-decoration:none;
+        }
+
+        /* RESPONSIVE */
+        @media screen and (max-width:768px){
+
+            .dashboard-container{
+                width:95%;
+                padding:15px;
+            }
+
+            table{
+                font-size:13px;
+            }
+
+            button{
+                padding:8px 12px;
+                font-size:12px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <h1>Student Dashboard</h1>
+
+    <p>Welcome {{ student.fullname }}</p>
+
+    <hr>
+
+    <!-- LOGOUT BUTTON -->
+    <a href="/logout">
+        <button class="logout-btn">
+            Logout
+        </button>
+    </a>
+
+    <!-- VIEW SCORE BUTTON -->
+    <a href="/view_score">
+        <button class="score-btn">
+            View Score
+        </button>
+    </a>
+
+    <hr>
+
+    <!-- SUBJECT TABLE -->
+
+    <h2>Available Subjects</h2>
+
+    <table>
+
+        <tr>
+            <th>ID</th>
+            <th>Subject</th>
+            <th>Chapter</th>
+        </tr>
+
+        {% for s in subjects %}
+
+        <tr>
+            <td>{{ s.id }}</td>
+            <td>{{ s.subject_name }}</td>
+            <td>{{ s.chapter_name }}</td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <hr>
+
+    <!-- QUIZ TABLE -->
+
+    <h2>Available Quizzes</h2>
+
+    <table>
+
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Subject</th>
+            <th>Action</th>
+        </tr>
+
+        {% for q in quizzes %}
+
+        <tr>
+
+            <td>{{ q.id }}</td>
+
+            <td>{{ q.title }}</td>
+
+            <td>
+
+                {% if q.subject %}
+
+                    {{ q.subject.subject_name }}
+
+                {% else %}
+
+                    N/A
+
+                {% endif %}
+
+            </td>
+
+            <td>
+
+                <a href="/start_exam/{{ q.id }}">
+
+                    <button class="start-btn">
+
+                        Start Exam
+
+                    </button>
+
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+</body>
+
+</html>

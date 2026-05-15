@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Exam Results</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6ff;
+            text-align: center;
+        }
+
+        h2 {
+            background: #1976d2;
+            color: white;
+            padding: 15px;
+            margin: 0;
+        }
+
+        a {
+            display: inline-block;
+            margin: 15px;
+            text-decoration: none;
+            color: #1976d2;
+            font-weight: bold;
+        }
+
+        table {
+            margin: auto;
+            width: 80%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0px 0px 10px #ccc;
+        }
+
+        th {
+            background: #1976d2;
+            color: white;
+            padding: 10px;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>My Exam Results</h2>
+
+<a href="/student_dashboard">⬅ Back</a>
+
+<table border="1">
+    <tr>
+        <th>Quiz</th>
+        <th>Score</th>
+        <th>Total</th>
+        <th>Attempts</th>
+    </tr>
+
+    {% for r in results %}
+    <tr>
+        <td>{{ r.quiz.title }}</td>
+        <td>{{ r.score }}</td>
+        <td>{{ r.total }}</td>
+
+        <!-- Attempts Column -->
+        <td>
+            {{ attempt_map[r.quiz_id] if r.quiz_id in attempt_map else 0 }}
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html>

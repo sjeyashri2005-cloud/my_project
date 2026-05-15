@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Assign Subject</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        .container {
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #1976d2;
+        }
+
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background: #1976d2;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #125aa0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        table th {
+            background: #1976d2;
+            color: white;
+        }
+
+        .msg {
+            color: green;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- BACK BUTTON -->
+    <a href="/admin_dashboard">
+        <button type="button"
+                style="background:#333; width:auto; padding:8px 15px;">
+            ⬅ Back to Dashboard
+        </button>
+    </a>
+
+    <h2>👨‍🏫 Assign Subject to Teacher</h2>
+
+    <!-- MESSAGE -->
+    {% if message %}
+        <p class="msg">{{ message }}</p>
+    {% endif %}
+
+    <!-- ASSIGN FORM -->
+    <div class="card">
+
+        <form method="POST">
+
+            <label>Select Teacher</label>
+
+            <select name="teacher_id" required>
+
+                <option value="">
+                    -- Select Teacher --
+                </option>
+
+                {% for teacher in teachers %}
+
+                <option value="{{ teacher.id }}">
+                    {{ teacher.fullname }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+            <label>Select Subject</label>
+
+            <select name="subject_id" required>
+
+                <option value="">
+                    -- Select Subject --
+                </option>
+
+                {% for subject in subjects %}
+
+                <option value="{{ subject.id }}">
+                    {{ subject.subject_name }}
+                    -
+                    {{ subject.chapter_name }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+            <button type="submit">
+                Assign Subject
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- ASSIGNED TABLE -->
+    <div class="card">
+
+        <h2>📋 Assigned Subjects</h2>
+
+        <table>
+
+            <tr>
+                <th>ID</th>
+                <th>Teacher</th>
+                <th>Subject</th>
+                <th>Chapter</th>
+                <th>Action</th>
+            </tr>
+
+            {% for assign in assigned_subjects %}
+
+            <tr>
+
+                <td>{{ assign.id }}</td>
+
+                <td>
+                    {{ assign.teacher.fullname if assign.teacher else 'Not Assigned' }}
+                </td>
+
+                <td>{{ assign.subject_name }}</td>
+
+                <td>{{ assign.chapter_name }}</td>
+
+                <td>
+
+                    <!-- UPDATED EDIT BUTTON -->
+                    <a href="/edit_assigned_subject/{{ assign.id }}">
+
+                        <button type="button"
+                                style="background:orange;
+                                       width:auto;
+                                       padding:5px 10px;">
+
+                            Edit
+
+                        </button>
+
+                    </a>
+
+                    <!-- UPDATED DELETE BUTTON -->
+                    <a href="/delete_assigned_subject/{{ assign.id }}"
+                       onclick="return confirm('Are you sure to delete?')">
+
+                        <button type="button"
+                                style="background:red;
+                                       width:auto;
+                                       padding:5px 10px;">
+
+                            Delete
+
+                        </button>
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

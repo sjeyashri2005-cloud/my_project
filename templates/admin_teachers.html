@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Admin Teachers</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <img src="https://cdn-icons-png.flaticon.com/512/2620/2620277.png"
+             class="sidebar-logo">
+
+        <h2>Quiz Master</h2>
+
+        <a href="/admin_dashboard">
+            Dashboard
+        </a>
+
+        <a href="/admin_students">
+            Students
+        </a>
+
+        <a href="/admin_teachers">
+            Teachers
+        </a>
+        <!-- SUBJECT DROPDOWN -->
+
+        <div class="subject-menu">
+
+            <button class="subject-btn"
+                    onclick="toggleSubjectMenu()">
+
+                Subjects ▼
+
+            </button>
+
+            <div class="subject-dropdown"
+                 id="subjectDropdown">
+
+                <a href="/add_subject">
+
+                    Add Subject
+
+                </a>
+
+                <a href="/assign_subject">
+
+                    Assign Subject
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- REPORTS -->
+
+        <a href="/reports">
+
+            Scores
+
+        </a>
+
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </div>
+
+    <!-- MAIN CONTENT -->
+
+    <div class="main-content">
+
+        <div class="header">
+
+            <div>
+
+                <h1>
+                    Teacher Details 👨‍🏫
+                </h1>
+
+                <p>
+                    View all registered teachers
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- TABLE -->
+
+        <div class="table-box">
+
+            <h2>
+                All Teachers
+            </h2>
+
+            <table>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Name</th>
+
+                    <th>Email</th>
+
+                    <th>Role</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+                {% for t in teachers %}
+
+                <tr>
+
+                    <td>
+                        {{ t.id }}
+                    </td>
+
+                    <td>
+                        {{ t.fullname }}
+                    </td>
+
+                    <td>
+                        {{ t.email }}
+                    </td>
+
+                    <td>
+                        {{ t.role }}
+                    </td>
+
+                    <td>
+
+                        <!-- EDIT BUTTON -->
+
+                        <a href="/edit_user/{{ t.id }}">
+
+                            <button style="
+                                background:#1976d2;
+                                color:white;
+                                border:none;
+                                padding:6px 12px;
+                                border-radius:5px;
+                                cursor:pointer;
+                            ">
+                                Edit
+                            </button>
+
+                        </a>
+
+                        <!-- DELETE BUTTON -->
+
+                        <a href="/delete_user/{{ t.id }}"
+                           onclick="return confirm('Delete Teacher?')">
+
+                            <button style="
+                                background:red;
+                                color:white;
+                                border:none;
+                                padding:6px 12px;
+                                border-radius:5px;
+                                cursor:pointer;
+                            ">
+                                Delete
+                            </button>
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Edit Question</title>
+
+    <style>
+
+        body{
+            margin:0;
+            padding:0;
+            font-family: Arial, sans-serif;
+            background:#f4f6f9;
+        }
+
+        /* MAIN CONTAINER */
+        .container{
+            width:450px;
+            margin:50px auto;
+            background:white;
+            padding:30px;
+            border-radius:12px;
+            box-shadow:0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        /* HEADING */
+        h2{
+            text-align:center;
+            color:#2c3e50;
+            margin-bottom:25px;
+        }
+
+        /* INPUTS */
+        input,
+        select{
+            width:100%;
+            padding:12px;
+            margin-top:8px;
+            border:1px solid #ccc;
+            border-radius:6px;
+            font-size:14px;
+            box-sizing:border-box;
+            outline:none;
+        }
+
+        input:focus,
+        select:focus{
+            border-color:#3498db;
+        }
+
+        /* BUTTONS */
+        button{
+            border:none;
+            padding:10px 18px;
+            border-radius:6px;
+            cursor:pointer;
+            font-size:14px;
+            transition:0.3s;
+        }
+
+        /* UPDATE BUTTON */
+        .update-btn{
+            width:100%;
+            background:#3498db;
+            color:white;
+        }
+
+        .update-btn:hover{
+            background:#2980b9;
+        }
+
+        /* BACK BUTTON */
+        .back-btn{
+            background:#2c3e50;
+            color:white;
+        }
+
+        .back-btn:hover{
+            background:#1a252f;
+        }
+
+        /* LINK */
+        a{
+            text-decoration:none;
+        }
+
+        /* RESPONSIVE */
+        @media screen and (max-width:600px){
+
+            .container{
+                width:90%;
+                padding:20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Edit Question</h2>
+
+    <form method="POST">
+
+        <!-- QUESTION -->
+
+        <input type="text"
+               name="question"
+               value="{{ question.question_text }}"
+               placeholder="Enter Question"
+               required>
+
+        <br><br>
+
+        <!-- OPTION A -->
+
+        <input type="text"
+               name="option_a"
+               value="{{ question.option_a }}"
+               placeholder="Option A"
+               required>
+
+        <br><br>
+
+        <!-- OPTION B -->
+
+        <input type="text"
+               name="option_b"
+               value="{{ question.option_b }}"
+               placeholder="Option B"
+               required>
+
+        <br><br>
+
+        <!-- OPTION C -->
+
+        <input type="text"
+               name="option_c"
+               value="{{ question.option_c }}"
+               placeholder="Option C"
+               required>
+
+        <br><br>
+
+        <!-- OPTION D -->
+
+        <input type="text"
+               name="option_d"
+               value="{{ question.option_d }}"
+               placeholder="Option D"
+               required>
+
+        <br><br>
+
+        <!-- CORRECT ANSWER -->
+
+        <select name="correct_answer">
+
+            <option value="A"
+                {% if question.correct_answer=='A' %}selected{% endif %}>
+                Correct Answer : A
+            </option>
+
+            <option value="B"
+                {% if question.correct_answer=='B' %}selected{% endif %}>
+                Correct Answer : B
+            </option>
+
+            <option value="C"
+                {% if question.correct_answer=='C' %}selected{% endif %}>
+                Correct Answer : C
+            </option>
+
+            <option value="D"
+                {% if question.correct_answer=='D' %}selected{% endif %}>
+                Correct Answer : D
+            </option>
+
+        </select>
+
+        <br><br>
+
+        <!-- UPDATE BUTTON -->
+
+        <button type="submit" class="update-btn">
+            Update Question
+        </button>
+
+    </form>
+
+    <br>
+
+    <!-- BACK BUTTON -->
+
+    <a href="/add_question/{{ question.quiz_id }}">
+
+        <button class="back-btn">
+            ⬅ Back
+        </button>
+
+    </a>
+
+</div>
+
+</body>
+
+</html>

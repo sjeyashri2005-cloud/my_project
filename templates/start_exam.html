@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Start Exam</title>
+
+    <script>
+        // 10 minute timer example
+        let time = 600;
+
+        function startTimer() {
+            let timer = document.getElementById("timer");
+
+            let x = setInterval(function () {
+
+                let min = Math.floor(time / 60);
+                let sec = time % 60;
+
+                timer.innerHTML = min + ":" + sec;
+
+                time--;
+
+                if (time < 0) {
+                    clearInterval(x);
+                    alert("Time Over!");
+                    document.getElementById("examForm").submit();
+                }
+
+            }, 1000);
+        }
+    </script>
+
+</head>
+
+<body onload="startTimer()">
+
+<!-- ✅ ADDED BACK BUTTON (NOT CHANGED YOUR CODE) -->
+<div style="text-align:left;margin:10px;">
+    <a href="/student_dashboard">
+        <button style="background:#1976d2;color:white;padding:8px 12px;border:none;border-radius:5px;">
+            ⬅ Back to Dashboard
+        </button>
+    </a>
+</div>
+
+<h2>{{ quiz.title }}</h2>
+
+<h3>Time Left: <span id="timer"></span></h3>
+
+<form method="POST" id="examForm">
+
+    {% for q in questions %}
+
+        <div style="border:1px solid black;padding:10px;margin:10px;">
+
+            <p><b>{{ loop.index }}. {{ q.question_text }}</b></p>
+
+            <input type="radio" name="{{ q.id }}" value="A"> {{ q.option_a }} <br>
+            <input type="radio" name="{{ q.id }}" value="B"> {{ q.option_b }} <br>
+            <input type="radio" name="{{ q.id }}" value="C"> {{ q.option_c }} <br>
+            <input type="radio" name="{{ q.id }}" value="D"> {{ q.option_d }} <br>
+
+        </div>
+
+    {% endfor %}
+
+    <button type="submit">Submit Exam</button>
+
+</form>
+
+</body>
+</html>
